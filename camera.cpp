@@ -1,19 +1,13 @@
-#include "camera.h"
-#include "ui_camera.h"
+#include <QtGui>
 
 #include <qmediaservice.h>
 #include <qmediarecorder.h>
 #include <qcamera.h>
 #include <qcameraviewfinder.h>
 
-#include <qmessagebox.h>
-#include <qpalette.h>
-
-#include <QtGui>
-
-#if (defined(Q_WS_MAEMO_5) || defined(Q_WS_MAEMO_6)) && QT_VERSION >= 0x040700
-#define HAVE_CAMERA_BUTTONS
-#endif
+#include "camera.h"
+#include "ui_camera.h"
+#include "aboutdialog.h"
 
 Camera::Camera(QWidget *parent) :
     QMainWindow(parent),
@@ -23,7 +17,10 @@ Camera::Camera(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //Camera devices:
+    // hmm, we want a menubar:
+    QMenuBar *mbar = new QMenuBar(this);
+    mbar->addAction("About", this, SLOT(showAboutDialog()));
+
     QByteArray cameraDevice;
 
     foreach(const QByteArray &deviceName, QCamera::availableDevices()) {
@@ -77,4 +74,10 @@ void Camera::startCamera()
 void Camera::stopCamera()
 {
     camera->stop();
+}
+
+void Camera::showAboutDialog()
+{
+    AboutDialog dialog;
+    dialog.exec();
 }

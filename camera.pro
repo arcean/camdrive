@@ -10,14 +10,17 @@ CONFIG += mobility11
 MOBILITY = multimedia
 
 HEADERS = \
-    camera.h
+    camera.h \
+    aboutdialog.h
 
 SOURCES = \
     main.cpp \
-    camera.cpp
+    camera.cpp \
+    aboutdialog.cpp
 
 FORMS += \
-    camera.ui
+    camera.ui \
+    aboutdialog.ui
 
 symbian {
     include(camerakeyevent_symbian/camerakeyevent_symbian.pri)

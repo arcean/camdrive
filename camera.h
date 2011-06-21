@@ -4,6 +4,8 @@
 #include <qcamera.h>
 #include <qmediarecorder.h>
 
+#include "aboutdialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class Camera;
@@ -35,11 +37,14 @@ private slots:
     void pause();
     void stop();
 
+    void showAboutDialog();
+
 private:
     Ui::Camera *ui;
 
     QCamera *camera;
     QMediaRecorder* mediaRecorder;
+
 };
 
 #endif
