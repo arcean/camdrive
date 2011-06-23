@@ -40,7 +40,13 @@ OTHER_FILES += \
     qtc_packaging/debian_fremantle/copyright \
     qtc_packaging/debian_fremantle/control \
     qtc_packaging/debian_fremantle/compat \
-    qtc_packaging/debian_fremantle/changelog
+    qtc_packaging/debian_fremantle/changelog \
+    camera.png
+
+maemo5 {
+    target.path = /opt/camera/bin
+    INSTALLS += target
+}
 
 maemo5 {
     target.path = /opt/camera/bin

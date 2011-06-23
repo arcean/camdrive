@@ -1,3 +1,5 @@
+#include <QGraphicsScene>
+
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
