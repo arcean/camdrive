@@ -16,7 +16,6 @@ Camera::Camera(QWidget *parent) :
     mediaRecorder(0)
 {
     ui->setupUi(this);
-  //  this->showFullScreen();
 
     // hmm, we want a menubar:
     QMenuBar *mbar = new QMenuBar(this);
@@ -43,9 +42,6 @@ Camera::Camera(QWidget *parent) :
         }
         mbar->addAction(cameraGroupAction);
     }
-
- //   ui->viewfinder->setFullScreen(true);
- //   ui->viewfinder->
 
     connect(cameraGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateCameraDevice(QAction*)));
     connect(ui->fullscreenButton, SIGNAL(clicked()), this, SLOT(toggleFullScreen()));
