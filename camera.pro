@@ -6,7 +6,12 @@ INCLUDEPATH+=../../src/multimedia \
 
 include(../mobility_examples.pri)
 
-CONFIG += mobility11
+maemo5 {
+    CONFIG += mobility11
+} else {
+    CONFIG += mobility
+}
+
 MOBILITY = multimedia
 
 HEADERS = \
