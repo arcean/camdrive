@@ -9,6 +9,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->authorsButton, SIGNAL(clicked()), this, SLOT(toggleAuthorsPage()));
+    ui->label_3->setPixmap(QPixmap("/opt/camdrive/share/pixmaps/camera.png"));
 }
 
 AboutDialog::~AboutDialog()

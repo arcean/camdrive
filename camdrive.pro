@@ -50,8 +50,3 @@ maemo5 {
     target.path = /opt/camdrive/bin
     INSTALLS += target
 }
-
-maemo5 {
-    target.path = /opt/camdrive/bin
-    INSTALLS += target
-}
