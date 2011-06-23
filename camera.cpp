@@ -17,9 +17,7 @@ Camera::Camera(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // hmm, we want a menubar:
-    QMenuBar *mbar = new QMenuBar(this);
-    mbar->addAction("About", this, SLOT(showAboutDialog()));
+    ui->menuFile->addAction("About", this, SLOT(showAboutDialog()));
 
     QByteArray cameraDevice;
     QActionGroup *cameraGroup = new QActionGroup(this);
@@ -40,7 +38,7 @@ Camera::Camera(QWidget *parent) :
             cameraDevice = deviceName;
             cameraGroupAction->setChecked(true);
         }
-        mbar->addAction(cameraGroupAction);
+        ui->menuDevices->addAction(cameraGroupAction);
     }
 
     connect(cameraGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateCameraDevice(QAction*)));
