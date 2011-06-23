@@ -39,6 +39,10 @@ private slots:
 
     void showAboutDialog();
 
+    void updateCameraDevice(QAction *action);
+
+    void toggleFullScreen();
+
 private:
     Ui::Camera *ui;
 
