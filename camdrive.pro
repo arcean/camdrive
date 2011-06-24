@@ -15,13 +15,15 @@ MOBILITY = multimedia
 HEADERS = \
     camera.h \
     aboutdialog.h \
-    settings.h
+    settings.h \
+    file.h
 
 SOURCES = \
     main.cpp \
     camera.cpp \
     aboutdialog.cpp \
-    settings.cpp
+    settings.cpp \
+    file.cpp
 
 FORMS += \
     camera.ui \
