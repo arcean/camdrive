@@ -14,16 +14,19 @@ MOBILITY = multimedia
 
 HEADERS = \
     camera.h \
-    aboutdialog.h
+    aboutdialog.h \
+    settings.h
 
 SOURCES = \
     main.cpp \
     camera.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    settings.cpp
 
 FORMS += \
     camera.ui \
-    aboutdialog.ui
+    aboutdialog.ui \
+    settings.ui
 
 icons.path = /opt/camdrive/share/pixmaps/
 icons.files = data/camera.png

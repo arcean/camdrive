@@ -8,6 +8,7 @@
 #include "camera.h"
 #include "ui_camera.h"
 #include "aboutdialog.h"
+#include "settings.h"
 
 Camera::Camera(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +19,7 @@ Camera::Camera(QWidget *parent) :
     ui->setupUi(this);
 
     ui->menuFile->addAction("About", this, SLOT(showAboutDialog()));
+    ui->menuFile->addAction("Settings", this, SLOT(showSettings()));
 
     QByteArray cameraDevice;
     QActionGroup *cameraGroup = new QActionGroup(this);
@@ -118,6 +120,14 @@ void Camera::showAboutDialog()
 {
     AboutDialog dialog;
     dialog.exec();
+}
+
+void Camera::showSettings()
+{
+    delete settings;
+    settings = new Settings(this);
+    settings->show();
+
 }
 
 /**

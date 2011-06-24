@@ -5,6 +5,7 @@
 #include <qmediarecorder.h>
 
 #include "aboutdialog.h"
+#include "settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,6 +25,7 @@ class Camera : public QMainWindow
 {
     Q_OBJECT
 public:
+    Settings *settings;
     Camera(QWidget *parent = 0);
     ~Camera();
 
@@ -38,6 +40,7 @@ private slots:
     void stop();
 
     void showAboutDialog();
+    void showSettings();
 
     void updateCameraDevice(QAction *action);
 
@@ -48,6 +51,8 @@ private:
 
     QCamera *camera;
     QMediaRecorder* mediaRecorder;
+
+
 
 };
 
