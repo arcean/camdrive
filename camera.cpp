@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QMaemo5InformationBox>
 
 #include <qmediaservice.h>
 #include <qmediarecorder.h>
@@ -45,6 +46,7 @@ Camera::Camera(QWidget *parent) :
 
     connect(cameraGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateCameraDevice(QAction*)));
     connect(ui->fullscreenButton, SIGNAL(clicked()), this, SLOT(toggleFullScreen()));
+    connect(ui->startrecordButton, SIGNAL(clicked()), this, SLOT(coverClose()));
 
     //Initialize default camera device
     setCamera(cameraDevice);
@@ -82,6 +84,14 @@ void Camera::setCamera(const QByteArray &cameraDevice)
 void Camera::record()
 {
     mediaRecorder->record();
+}
+
+/**
+  Set Output Location
+*/
+void Camera::setOutputLocation(const QUrl &location)
+{
+    mediaRecorder->setOutputLocation(location);
 }
 
 /**
@@ -149,4 +159,15 @@ void Camera::toggleFullScreen()
         showNormal();
     else
         showFullScreen();
+}
+/**
+  Cover clos nitification
+*/
+void Camera::coverClose()
+{
+    //TODO: later :-)
+    if(1)
+    {   QMaemo5InformationBox *box = new QMaemo5InformationBox(this);
+        box->information(this, "Open Lens Cover", QMaemo5InformationBox::DefaultTimeout);
+    }
 }

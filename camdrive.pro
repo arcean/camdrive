@@ -1,3 +1,4 @@
+QT += gui maemo5
 TEMPLATE = app
 TARGET = camdrive
 

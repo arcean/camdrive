@@ -26,6 +26,7 @@ class Camera : public QMainWindow
     Q_OBJECT
 public:
     Settings *settings;
+
     Camera(QWidget *parent = 0);
     ~Camera();
 
@@ -43,6 +44,8 @@ private slots:
     void showSettings();
 
     void updateCameraDevice(QAction *action);
+    void setOutputLocation(const QUrl &location);
+    void coverClose();
 
     void toggleFullScreen();
 
