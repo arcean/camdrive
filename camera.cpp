@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QMaemo5InformationBox>
+#include <QTextStream>
 
 #include <qmediaservice.h>
 #include <qmediarecorder.h>
@@ -165,9 +166,16 @@ void Camera::toggleFullScreen()
 */
 void Camera::coverClose()
 {
-    //TODO: later :-)
-    if(1)
-    {   QMaemo5InformationBox *box = new QMaemo5InformationBox(this);
-        box->information(this, "Open Lens Cover", QMaemo5InformationBox::DefaultTimeout);
+    QFile *state = new QFile("/sys/devices/platform/gpio-switch/cam_shutter/state");
+    if(state->open(QIODevice::ReadOnly|QIODevice::Text))
+    {
+        QTextStream *in = new QTextStream(state);
+        QString linia = in->readLine();
+        if(linia.contains("closed"))
+        {
+            QMaemo5InformationBox *box = new QMaemo5InformationBox(this);
+            box->information(this, "Open Lens Cover", QMaemo5InformationBox::DefaultTimeout);
+        }
+        state->close();
     }
 }
