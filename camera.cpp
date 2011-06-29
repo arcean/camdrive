@@ -45,12 +45,22 @@ Camera::Camera(QWidget *parent) :
         ui->menuDevices->addAction(cameraGroupAction);
     }
 
+    timer = new QTimer(this);
+    //Default time interval - 10m = 10 * 60 * 1000,
+    //It should be configurable, and loaded on app startup
+    timer->setInterval(10 * 60 * 1000);
+
+    file = new File(CAM_DEFAULT_FILE_NAME);
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(changeUsedFile()));
     connect(cameraGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateCameraDevice(QAction*)));
     connect(ui->fullscreenButton, SIGNAL(clicked()), this, SLOT(toggleFullScreen()));
-    connect(ui->startrecordButton, SIGNAL(clicked()), this, SLOT(coverClose()));
+    connect(ui->startrecordButton, SIGNAL(clicked()), this, SLOT(startRecording()));
 
     //Initialize default camera device
     setCamera(cameraDevice);
+
+    toggleRecordButton = false;
 }
 
 Camera::~Camera()
@@ -73,10 +83,34 @@ void Camera::setCamera(const QByteArray &cameraDevice)
         camera = new QCamera(cameraDevice);
 
     mediaRecorder = new QMediaRecorder(camera);
+    setOutputLocation();
 
     camera->setViewfinder(ui->viewfinder);
     camera->setCaptureMode(QCamera::CaptureVideo);
     camera->start();
+}
+
+void Camera::changeUsedFile()
+{
+    qDebug() << "Changing used temp file for recording...";
+    this->stop();
+    file->changeFile();
+    setOutputLocation();
+    this->record();
+    qDebug() << "Changing temp file: DONE";
+}
+
+void Camera::startRecording()
+{
+    if(toggleRecordButton) {
+        stop();
+        ui->startrecordButton->setText("Record");
+        file->fileReady();
+    }
+    else {
+        ui->startrecordButton->setText("Stop");
+        record();
+    }
 }
 
 /**
@@ -85,14 +119,17 @@ void Camera::setCamera(const QByteArray &cameraDevice)
 void Camera::record()
 {
     mediaRecorder->record();
+    timer->start();
+    toggleRecordButton = true;
 }
 
 /**
   Set Output Location
 */
-void Camera::setOutputLocation(const QUrl &location)
+void Camera::setOutputLocation()
 {
-    mediaRecorder->setOutputLocation(location);
+    qDebug() << "setOutputLocation: " << QDir::toNativeSeparators(file->getActiveFile());
+    mediaRecorder->setOutputLocation(QDir::toNativeSeparators(file->getActiveFile()));
 }
 
 /**
@@ -100,6 +137,8 @@ void Camera::setOutputLocation(const QUrl &location)
 */
 void Camera::pause()
 {
+    timer->stop();
+    toggleRecordButton = false;
     mediaRecorder->pause();
 }
 
@@ -108,6 +147,8 @@ void Camera::pause()
 */
 void Camera::stop()
 {
+    timer->stop();
+    toggleRecordButton = false;
     mediaRecorder->stop();
 }
 
@@ -161,6 +202,7 @@ void Camera::toggleFullScreen()
     else
         showFullScreen();
 }
+
 /**
   Cover clos nitification
 */

@@ -1,11 +1,18 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <QMainWindow>
+#include <QDir>
+#include <QTimer>
+
 #include <qcamera.h>
 #include <qmediarecorder.h>
 
 #include "aboutdialog.h"
 #include "settings.h"
+#include "file.h"
+
+#define CAM_DEFAULT_FILE_NAME "camdrive_file"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,9 +22,6 @@ namespace Ui {
 class QCameraViewfinder;
 
 QT_END_NAMESPACE
-
-#include <QMainWindow>
-#include <QDir>
 
 QT_USE_NAMESPACE
 
@@ -44,9 +48,10 @@ private slots:
     void showSettings();
 
     void updateCameraDevice(QAction *action);
-    void setOutputLocation(const QUrl &location);
+    void startRecording();
+    void setOutputLocation();
     void coverClose();
-
+    void changeUsedFile();
     void toggleFullScreen();
 
 private:
@@ -54,6 +59,11 @@ private:
 
     QCamera *camera;
     QMediaRecorder* mediaRecorder;
+    QTimer *timer;
+    File *file;
+
+    //Should we start recording or just stop?
+    bool toggleRecordButton;
 
 
 

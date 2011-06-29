@@ -1,5 +1,5 @@
 #include "file.h"
-
+#include <QDebug>
 File::File(QString fileName)
 {
     this->fileName = fileName + ".mp4";
@@ -23,21 +23,21 @@ void File::createAppCatalog()
 
 bool File::init()
 {
-    if(checkIfNotExists())
+    if(!checkIfNotExists())
         return false;
 
     //activeFile = tempFileName1
-    activeFile = 1;
+    activeFile = 0;
 
     return true;
 }
 
 bool File::checkIfNotExists()
 {
-    createAppCatalog();
+    //createAppCatalog();
 
-    QFile file1("/home/user/." APP_NAME "/" + tempFileName1);
-    QFile file2("/home/user/." APP_NAME "/" + tempFileName2);
+    QFile file1("/home/user/MyDocs/.videos/" + tempFileName1);
+    QFile file2("/home/user/MyDocs/.videos/" + tempFileName2);
 
     if(file1.exists() || file2.exists())
         return false;
@@ -51,13 +51,13 @@ bool File::checkIfNotExists()
 void File::changeFile()
 {
     if(activeFile) {
-        QFile file("/home/user/." APP_NAME "/" + tempFileName2);
+        QFile file("/home/user/MyDocs/.videos/" + tempFileName1);
 
-        activeFile = 2;
+        activeFile = 0;
         file.remove();
 
     } else {
-        QFile file("/home/user/." APP_NAME "/" + tempFileName1);
+        QFile file("/home/user/MyDocs/.videos/" + tempFileName2);
 
         activeFile = 1;
         file.remove();
@@ -72,11 +72,11 @@ bool File::fileReady()
     bool succeed = false;
 
     if(activeFile) {
-        QFile file("/home/user/." APP_NAME "/" + tempFileName1);
+        QFile file("/home/user/MyDocs/.videos/" + tempFileName2);
 
         succeed = file.rename("/home/user/MyDocs/.videos/" + fileName);
     } else {
-        QFile file("/home/user/." APP_NAME "/" + tempFileName2);
+        QFile file("/home/user/MyDocs/.videos/" + tempFileName1);
 
         succeed = file.rename("/home/user/MyDocs/.videos/" + fileName);
     }
@@ -91,8 +91,8 @@ bool File::fileReady()
   */
 void File::removeTempFiles()
 {
-    QFile file1("/home/user/." APP_NAME "/" + tempFileName1);
-    QFile file2("/home/user/." APP_NAME "/" + tempFileName2);
+    QFile file1("/home/user/MyDocs/.videos/" + tempFileName1);
+    QFile file2("/home/user/MyDocs/.videos/" + tempFileName2);
 
     file1.remove();
     file2.remove();
@@ -111,8 +111,9 @@ int File::getActiveFileNumber()
   */
 QString File::getActiveFile()
 {
+    qDebug() << "Active file: " << activeFile;
     if(activeFile)
-        return QString("/home/user/." APP_NAME "/" + tempFileName1);
+        return QString("/home/user/MyDocs/.videos/" + tempFileName2);
     else
-        return QString("/home/user/." APP_NAME "/" + tempFileName2);
+        return QString("/home/user/MyDocs/.videos/" + tempFileName1);
 }
