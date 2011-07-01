@@ -13,8 +13,8 @@
 #include "settings.h"
 
 #ifdef Q_WS_MAEMO_5
-#include <QtGui/QX11Info>
-#include <X11/Xlib.h>
+    #include <QtGui/QX11Info>
+    #include <X11/Xlib.h>
 #endif
 
 Camera::Camera(QWidget *parent) :
@@ -118,6 +118,7 @@ void Camera::startRecording()
         file->fileReady();
     }
     else {
+        coverClose();
         ui->startrecordButton->setText("Stop");
         record();
     }
