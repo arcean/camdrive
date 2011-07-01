@@ -1,13 +1,13 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QWidget>
+#include <QMainWindow>
 
 namespace Ui {
     class Settings;
 }
 
-class Settings : public QWidget
+class Settings : public QMainWindow
 {
     Q_OBJECT
 

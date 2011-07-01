@@ -11,6 +11,7 @@
 #include "aboutdialog.h"
 #include "settings.h"
 #include "file.h"
+#include "dialog.h"
 
 #define CAM_DEFAULT_FILE_NAME "camdrive_file"
 
@@ -67,9 +68,6 @@ private:
 
     //Should we start recording or just stop?
     bool toggleRecordButton;
-
-
-
 };
 
 #endif

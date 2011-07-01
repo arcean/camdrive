@@ -24,6 +24,7 @@ Camera::Camera(QWidget *parent) :
     mediaRecorder(0)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_Maemo5StackedWindow);
 
     ui->menuFile->addAction("About", this, SLOT(showAboutDialog()));
     ui->menuFile->addAction("Settings", this, SLOT(showSettings()));
