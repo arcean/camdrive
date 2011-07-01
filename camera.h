@@ -53,6 +53,9 @@ private slots:
     void coverClose();
     void changeUsedFile();
     void toggleFullScreen();
+#ifdef Q_WS_MAEMO_5
+    void takeScreenshot();
+#endif
 
 private:
     Ui::Camera *ui;

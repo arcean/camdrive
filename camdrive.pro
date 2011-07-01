@@ -34,7 +34,10 @@ FORMS += \
 icons.path = /opt/camdrive/share/pixmaps/
 icons.files = data/camera.png
 
-INSTALLS += icons
+maemo_specific.path = /usr/share/dbus-1/services/
+maemo_specific.files = org.maemo.camdrive.service
+
+INSTALLS += icons maemo_specific
 
 symbian {
     include(camerakeyevent_symbian/camerakeyevent_symbian.pri)
@@ -51,6 +54,9 @@ OTHER_FILES += \
     qtc_packaging/debian_fremantle/compat \
     qtc_packaging/debian_fremantle/changelog \
     camera.png
+
+include(deployment.pri)
+qtcAddDeployment()
 
 maemo5 {
     target.path = /opt/camdrive/bin

@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.maemo.camdrive
+Exec=/opt/camdrive/bin/camdrive

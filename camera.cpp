@@ -12,6 +12,11 @@
 #include "aboutdialog.h"
 #include "settings.h"
 
+#ifdef Q_WS_MAEMO_5
+#include <QtGui/QX11Info>
+#include <X11/Xlib.h>
+#endif
+
 Camera::Camera(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Camera),
@@ -61,6 +66,10 @@ Camera::Camera(QWidget *parent) :
     setCamera(cameraDevice);
 
     toggleRecordButton = false;
+
+#ifdef Q_WS_MAEMO_5
+    QTimer::singleShot(700, this, SLOT(takeScreenshot()));
+#endif
 }
 
 Camera::~Camera()
@@ -221,3 +230,32 @@ void Camera::coverClose()
         state->close();
     }
 }
+
+#ifdef Q_WS_MAEMO_5
+void Camera::takeScreenshot()
+{
+    // True takes a screenshot, false destroys it
+    // See http://maemo.org/api_refs/5.0/5.0-final/hildon/hildon-Additions-to-GTK+.html#hildon-gtk-window-take-screenshot
+    bool take = true;
+    XEvent xev = { 0 };
+
+    xev.xclient.type = ClientMessage;
+    xev.xclient.serial = 0;
+    xev.xclient.send_event = True;
+    xev.xclient.display = QX11Info::display();
+    xev.xclient.window = XDefaultRootWindow (xev.xclient.display);
+    xev.xclient.message_type = XInternAtom (xev.xclient.display, "_HILDON_LOADING_SCREENSHOT", False);
+    xev.xclient.format = 32;
+    xev.xclient.data.l[0] = take ? 0 : 1;
+    xev.xclient.data.l[1] = this->winId();
+
+    XSendEvent (xev.xclient.display,
+                xev.xclient.window,
+                False,
+                SubstructureRedirectMask | SubstructureNotifyMask,
+                &xev);
+
+    XFlush (xev.xclient.display);
+    XSync (xev.xclient.display, False);
+}
+#endif
