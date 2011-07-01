@@ -11,7 +11,6 @@
 #include "aboutdialog.h"
 #include "settings.h"
 #include "file.h"
-#include "dialog.h"
 
 #define CAM_DEFAULT_FILE_NAME "camdrive_file"
 
